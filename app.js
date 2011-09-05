@@ -53,7 +53,7 @@ http.createServer(function (request, response) {
 ws_server.addListener("connection", function(conn){
 
   conn.addListener("message", function(message){
-	console.log("Message");
+	console.log(message);
     });
 });
 
