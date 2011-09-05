@@ -1,11 +1,21 @@
-var videoId = 'video';
-var scaleFactor = 0.5;
-var snapshot = null;
-var upload_image;
-var video = document.getElementsByTagName('video')[0], 
-heading = document.getElementsByTagName('h1')[0],
-button = document.getElementById('shoot');
-send_button = document.getElementById('send_button');
+
+
+/*******************************************************************************
+ *
+ * Camera Functionality
+ *
+ *******************************************************************************
+ */
+
+var videoId = 'video',
+    scaleFactor = 0.5,
+    snapshot = null,
+    upload_image, 
+    video = document.getElementsByTagName('video')[0], 
+    heading = document.getElementsByTagName('h1')[0];
+    var ws = new WebSocket("ws://192.168.1.2:8001/");
+
+
 
 /**
  * Captures a image frame from the provided video element.
@@ -81,13 +91,6 @@ function supportsGetUserMedia()
     }
 }
 
-function upload()
-{
-    $.post('/upload.php',{img : upload_image}, function(data){
-           alert(data);
-       }) ;
-}
-
          
 if(supportsGetUserMedia()) 
 {      
@@ -111,5 +114,49 @@ if(!supportsToDataURL())
     heading.textContent+="You browser is lame and does NOT support Canvas.toDataURL();"
 }
 
-button.addEventListener("click", shoot, true);
-send_button.addEventListener("click", upload, true);
+
+/*******************************************************************************
+ * 
+ * Websockets stuff
+ * 
+ *******************************************************************************
+ */
+button = document.getElementById('button');
+
+//setup websocket connection
+
+
+
+//setup callbacks
+ws.onopen = function() 
+{
+    console.log('Websocket Open');
+};
+
+ws.onclose = function() 
+{
+    console.log('Websocket Closed');
+};
+
+ws.onerror = function(event) 
+{
+    console.log('error');
+};
+
+//bind button to send picture
+addEventListener('click', streamFrame, false);
+
+function streamFrame()
+{
+    var context = canvas.getContext("2d");
+    context.drawImage(video, 0, 0, 240, 320);
+    
+    var image = {"demo" : {
+        "type"  : "device",
+        "image" : canvas.toDataURL("image/png")
+    }};
+                
+    var imageObj = JSON.stringify(image);
+    
+    ws.send(imageObj);
+}
