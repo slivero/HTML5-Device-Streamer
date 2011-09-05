@@ -15,3 +15,6 @@ root {
     display: block;
 }
 
+#buffer {
+    display: none;
+}
