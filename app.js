@@ -52,14 +52,16 @@ http.createServer(function (request, response) {
 // Handle WebSocket Requests
 ws_server.addListener("connection", function(conn){
 
-  conn.addListener("message", function(message){
-	console.log(message);
+  conn.addListener("message", function(msg){
+	console.log('message');
+        conn.broadcast(msg);
     });
 });
 
 ws_server.addListener("error", function(){
   console.log(Array.prototype.join.call(arguments, ", "));
 });
+
 
 ws_server.addListener("disconnected", function(conn){
   ws_server.broadcast("<"+conn.id+"> disconnected");
