@@ -2,6 +2,8 @@
  * 
  * Streaming Video Client
  * 
+ * Recieves image data via a websocket connection and renders it to #img
+ * 
  *******************************************************************************
  */
 

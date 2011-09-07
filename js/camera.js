@@ -8,12 +8,12 @@
  */
 
 var videoId = 'video',
-    scaleFactor = 0.5,
-    snapshot = null,
-    upload_image, 
-    video = document.getElementsByTagName('video')[0], 
-    heading = document.getElementsByTagName('h1')[0];
-    var ws = new WebSocket("ws://192.168.1.2:8001/");
+scaleFactor = 0.5,
+snapshot = null,
+upload_image, 
+video = document.getElementsByTagName('video')[0], 
+heading = document.getElementsByTagName('h1')[0];
+var ws = new WebSocket("ws://192.168.1.2:8001/");
 
 
 
@@ -151,20 +151,28 @@ ws.onmessage = function(event)
 //bind button to send picture
 addEventListener('click', streamFrame, false);
 
+/**
+ * Start grabbing frames and sending them via the websocket
+ * 
+ * Called when the button is pressed, grabs a frame of video,
+ * renders it to the canvas, grabs the base64 encoded data and
+ * sends it through the websocket. The framerate can be adjusted
+ * by changing the interval time but I found this to be the fastest
+ * my phone could cope with
+ * 
+ */
+
 function streamFrame()
 {
     var context = canvas.getContext("2d");
     
     setInterval(function(){
         context.drawImage(video, 0, 0, 240, 320);
-     var image = canvas.toDataURL("image/png");
+        var image = canvas.toDataURL("image/png");
 
         
-    console.log('send');
-    ws.send(image);    
+        console.log('send');
+        ws.send(image);    
 
-},400);
-    
-    
-   
+    },400);  
 }

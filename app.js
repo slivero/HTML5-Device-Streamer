@@ -4,10 +4,12 @@ var ws = require('websocket-server');
 var sys = require("sys");
 var path = require('path');
 
+//create websocket server
 var ws_server = ws.createServer();
 
-//standard html home page
-
+/**
+ * Setup simple http server to serve static page elements on port 8000
+ */
 http.createServer(function (request, response) {
 
     console.log('request starting...');
@@ -49,9 +51,12 @@ http.createServer(function (request, response) {
 	
 }).listen(8000);
 
+
+
 // Handle WebSocket Requests
 ws_server.addListener("connection", function(conn){
 
+//add listener to rebroadcast incomming messages
   conn.addListener("message", function(msg){
 	console.log('message');
         conn.broadcast(msg);
@@ -67,4 +72,5 @@ ws_server.addListener("disconnected", function(conn){
   ws_server.broadcast("<"+conn.id+"> disconnected");
 });
 
+//start websocket server on port 8001
 ws_server.listen(8001);
