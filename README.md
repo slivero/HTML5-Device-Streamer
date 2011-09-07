@@ -8,7 +8,7 @@ This is a simple demo of streaming live video from one web browser to another in
 
 ## Requirements
 
-* An android phone running opera mobile with getUserMedia support - http://my.opera.com/ODIN/blog/2011/07/06/getusermedia-and-device-orientation-adventures
+* An android phone running opera mobile with getUserMedia support - http://my.opera.com/core/blog/2011/03/23/webcam-orientation-preview
 * A server running node.js to run the websocket server. The node module websocket-server is required.
 * A websocket compatible browser to watch the video
 
