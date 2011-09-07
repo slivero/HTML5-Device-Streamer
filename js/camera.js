@@ -143,20 +143,28 @@ ws.onerror = function(event)
     console.log('error');
 };
 
+ws.onmessage = function(event) 
+{
+    console.log('message');
+};
+
 //bind button to send picture
 addEventListener('click', streamFrame, false);
 
 function streamFrame()
 {
     var context = canvas.getContext("2d");
-    context.drawImage(video, 0, 0, 240, 320);
     
-    var image = {"demo" : {
-        "type"  : "device",
-        "image" : canvas.toDataURL("image/png")
-    }};
-                
-    var imageObj = JSON.stringify(image);
+    setInterval(function(){
+        context.drawImage(video, 0, 0, 240, 320);
+     var image = canvas.toDataURL("image/png");
+
+        
+    console.log('send');
+    ws.send(image);    
+
+},400);
     
-    ws.send(imageObj);
+    
+   
 }
