@@ -16,4 +16,4 @@ This is a simple demo of streaming live video from one web browser to another in
 
 This quick hack was inspired by this video http://www.youtube.com/watch?v=cjmuwA8l1LQ 
 but the author has not released the source anywhere I've found. As I had already been
- experimenting in the area I pretty much knew how to do it already
+ experimenting in the area I pretty much knew how to do it already so did it and put it here.
